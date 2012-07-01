@@ -1,0 +1,88 @@
+<html>
+	<head>
+		<title>Simple Sparkline using SVG Path and d3.js</title>
+		<script src='lib/d3/d3.v2.js'></script>
+		<style>
+		body div {
+			text-align: center;
+			border: 2px black solid;
+		}
+		.chart rect {
+			fill: steelblue;
+			stroke: white;
+		}
+		</style>
+	</head>
+	<body>
+		<div id='chart1'>
+		</div>
+		<br/><br/><br/>
+		<div id='chart2'>
+		</div>
+	</body>
+	<script>
+var data1 = [
+	{'time': 1297110663, 'value': 56},
+	{'time': 1297110664, 'value': 53},
+	{'time': 1297110665, 'value': 58},
+	{'time': 1297110666, 'value': 58},
+	{'time': 1297110667, 'value': 52},
+	{'time': 1297110667, 'value': 12}
+	];
+
+var data2 = [
+	{'time': 1297110663, 'value': 66},
+	{'time': 1297110664, 'value': 63},
+	{'time': 1297110665, 'value': 68},
+	{'time': 1297110666, 'value': 68},
+	{'time': 1297110667, 'value': 62}
+	];
+
+var w1 = window.innerWidth/data1.length - 20,
+	h1 = window.innerHeight/3;
+var w2 = window.innerWidth/data2.length - 20,
+	h2 = window.innerHeight/3;
+
+var x1 = d3.scale.linear()
+	.domain([0, 1])
+	.range([0, w1]);
+var y1 = d3.scale.linear()
+	.domain([0, 100])
+	.rangeRound([0, h1]);
+var x2 = d3.scale.linear()
+	.domain([0, 1])
+	.range([0, w2]);
+var y2 = d3.scale.linear()
+	.domain([0, 100])
+	.rangeRound([0, h2]);
+
+var chart1 = d3.select('#chart1').append('svg')
+	.attr('class', 'chart')
+	.attr('width', w1 * data1.length - 1)
+	.attr('height', h1);
+
+chart1.selectAll('rect')
+		.data(data1)
+	.enter().append('rect')
+		.attr('x', function(d, i) { return x1(i) - .5; })
+		.attr('y', function(d) { return h1 - y1(d.value) - .5; })
+		.attr('width', w1)
+		.attr('height', function(d) { return y1(d.value); })
+		.text(function(d) { return d; });
+
+var chart2 = d3.select('#chart2').append('svg')
+	.attr('class', 'chart')
+	.attr('width', w2 * data2.length - 1)
+	.attr('height', h2);
+
+chart2.selectAll('rect')
+		.data(data2)
+	.enter().append('rect')
+		.attr('x', function(d, i) { return x2(i) - .5; })
+		.attr('y', function(d) { return h1 - y2(d.value) - .5; })
+		.attr('width', w2)
+		.attr('height', function(d) { return y2(d.value); })
+		.text(function(d) { return d; });
+
+		</script>
+</html>
