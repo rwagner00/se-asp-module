@@ -1,0 +1,5 @@
+name = Asp Reports Module
+package = Custom
+core = 7.x
+files[] = asp-reports.module
+

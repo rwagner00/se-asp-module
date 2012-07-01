@@ -1,5 +1,0 @@
-name = Asp Module
-package = Custom
-core = 7.x
-files[] = asp-module.module
-
